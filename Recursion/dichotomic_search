@@ -1,0 +1,48 @@
+#include <iostream>
+using namespace std;
+int dichotomic_search(int arr[], int el, int left, int right) {
+	while (left <= right) {
+		int mid = (left + right) / 2;
+			if (arr[mid] == el) {
+				return mid;
+			}
+		if (arr[mid] < el) {
+			left = mid + 1;
+		}
+		if (arr[mid] > el) {
+			right = mid - 1;
+		}
+	}
+	return -1;
+}
+
+int dichotomic_search_recursion(int arr[], int el, int left, int right) {
+	if (left > right) {
+		return -1;
+	}
+	else {
+		int mid = (left + right) / 2;
+			if (arr[mid] == el) {
+				return mid;
+			}
+		if (arr[mid] > el) {
+			return dichotomic_search_recursion(arr, el, left, mid - 1);
+		}
+		if (arr[mid] < el) {
+			return dichotomic_search_recursion(arr, el, mid + 1, right);
+		}
+	}
+}
+
+
+int main() {
+	int arr[] = { 2, 3, 4, 10, 40 };
+	int x = 3;
+	int n = sizeof(arr) / sizeof(arr[0]);
+	int result = dichotomic_search_recursion(arr, x, 0, n - 1);
+	if (result == -1)
+		cout << "Element is not present in array";
+	else
+		cout << "Element is present at index " << result;
+	return 0;
+}
