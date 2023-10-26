@@ -1,0 +1,55 @@
+#include <iostream>
+
+using namespace std;
+
+void quickSort(int* arr, int li, int di)
+{
+	int j = li, k = di;
+	cout << "Partition limits from " << li << " to  " << di << endl;
+	if (di - li >= 1)
+	{
+		int etalon = arr[(li + di) / 2];
+		cout << "Etalon is - " << etalon << endl;
+		//Obrazuvane na dqlove
+		do
+		{
+			while (arr[j] < etalon)
+				j++;
+			while (arr[k] > etalon)
+				k--;
+			if (j <= k)
+			{
+				cout << "Change " << arr[j] << " and " << arr[k] << endl;
+				int temp = arr[k];
+				arr[k] = arr[j];
+				arr[j] = temp;
+				k--;
+				j++;
+			}
+		} 
+		while (j <= k);
+
+		quickSort(arr, li, k);
+		quickSort(arr, j, di);
+		
+	}
+	else
+		cout << "Duno" << endl;
+}
+int main()
+{
+	int arr[14] = {10, 8, 4, 7, 9, 0, 3, 4, 7, 10, 8, 9, 0};
+	cout << "Initial state of the array: " << endl;
+	for (int i = 0; i < 7; i++)
+	{
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+	quickSort(arr, 0, 6);
+	cout << "Final state of the array: " << endl;
+	for (int i = 0; i < 7; i++)
+	{
+		cout << arr[i] << " ";
+	}
+
+}
