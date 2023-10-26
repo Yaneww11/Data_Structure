@@ -1,0 +1,107 @@
+#include <iostream>
+
+using namespace std;
+
+void quickSort(int arr[], int n, int etalon_index)
+{
+	int etalon = arr[etalon_index];
+	cout << "Etalon is " << etalon << endl;
+	int j = 0;
+	int k = n - 1;
+	do
+	{
+		while (arr[j] < etalon)
+			j++;
+		while (arr[k] > etalon)
+			k--;
+		if (j <= k)
+		{
+			int temp = arr[k];
+			arr[k] = arr[j];
+			arr[j] = temp;
+			k--;
+			j++;
+		}
+	} while (j <= k);
+
+	int index = 0;
+	cout << "Left part: " << endl;
+	for (int i = 0; i < etalon_index; i++)
+	{
+		if (arr[i] <= etalon) {
+			cout << arr[i] << " ";
+		}
+		
+	}
+
+	cout << endl;
+	cout << "Right part: " << endl;
+	for (int i = etalon_index + 1; i < n; i++)
+	{
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+	
+}
+int main()
+{
+	int const n = 14;
+	int ascending_array[n];
+	for (int i = 0; i < n; i++)
+	{
+		ascending_array[i] = i + 1;
+	}
+
+	int desceding_array[n];
+	for (int i = 0; i < n; i++)
+	{
+		desceding_array[i] = 14 - i;
+	}
+
+	int unordered_array[n];
+	for (int i = 0; i < n; i++)
+	{
+		unordered_array[i] = rand() % 15;
+	}
+	
+	int rand_element_index = rand() % 15;
+
+	cout << "Assending array:" << endl;
+	for (int i = 0; i < n; i++)
+	{
+		cout << ascending_array[i] << " ";
+	}
+	cout << endl;
+	quickSort(ascending_array, n, n/2);
+	quickSort(ascending_array, n, n -1);
+	quickSort(ascending_array, n, 0);
+	quickSort(ascending_array, n, rand_element_index);
+	cout << endl;
+	cout << "Desceding array:" << endl;
+	for (int i = 0; i < n; i++)
+	{
+		cout << desceding_array[i] << " ";
+	}
+	cout << endl;
+	quickSort(desceding_array, n, n/2);
+	for (int i = 0; i < n; i++)
+	{
+		cout << desceding_array[i] << " ";
+	}
+	quickSort(desceding_array, n, n - 1);
+	quickSort(desceding_array, n, 0);
+	quickSort(desceding_array, n, rand_element_index);
+	cout << endl;
+	cout << "Unordered array:" << endl;
+	for (int i = 0; i < n; i++)
+	{
+		cout << unordered_array[i] << " ";
+	}
+	cout << endl;
+	quickSort(unordered_array, n, n/2);
+	quickSort(unordered_array, n, n - 1);
+	quickSort(unordered_array, n, 0);
+	quickSort(unordered_array, n, rand_element_index);
+	
+
+}
