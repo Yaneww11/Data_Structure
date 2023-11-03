@@ -1,0 +1,82 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <sys/types.h>
+using namespace std;
+
+void quickSort(int* arr, int li, int di)
+{
+	int j = li, k = di;
+	if (di - li >= 1)
+	{
+		int etalon = arr[(li + di) / 2];
+		do
+		{
+			while (arr[j] < etalon)
+				j++;
+			while (arr[k] > etalon)
+				k--;
+			if (j <= k)
+			{
+				int temp = arr[k];
+				arr[k] = arr[j];
+				arr[j] = temp;
+				k--;
+				j++;
+			}
+		} while (j <= k);
+
+		quickSort(arr, li, k);
+		quickSort(arr, j, di);
+
+	}
+		
+}
+void selectionSort(int* a, int n) {
+	for (int j = 0; j < n; j++) {
+		int minIndex = j;
+		for (int i = j + 1; i < n; i++) {
+			if (a[i] < a[minIndex]) {
+				minIndex = i;
+			}
+		}
+		int tmp = a[j];
+		a[j] = a[minIndex];
+		a[minIndex] = tmp;
+	}
+}
+
+int main() {
+	srand(time(NULL));
+
+	cout << "Algorithm, Array Size, Execution Time (seconds)" << endl;
+	int* arr = new int[n];
+	for (int j = 0; j < n; j++) {
+		arr[j] = rand();
+	}
+
+	for (int n = 2000; n <= 10000; n += 1000) {
+		
+
+			int* arrCopy = new int[n];
+			memcpy(arrCopy, arr, n * sizeof(int));
+
+			clock_t t1 = clock();
+			quickSort(arrCopy, 0, n - 1);
+			clock_t t2 = clock();
+			double elapsedTime = static_cast<double>(t2 - t1) / CLOCKS_PER_SEC;
+			cout << "Quick Sort: " << n << ", " << elapsedTime << endl;
+
+			memcpy(arrCopy, arr, n * sizeof(int));
+			t1 = clock();
+			selectionSort(arrCopy, n);
+			t2 = clock();
+			elapsedTime = static_cast<double>(t2 - t1) / CLOCKS_PER_SEC;
+			cout << "Selection Sort:  " << n << ", " << elapsedTime << endl;
+
+			delete[] arr;
+			delete[] arrCopy;
+	}
+
+	return 0;
+}
