@@ -1,34 +1,44 @@
 #include <iostream>
 #include <vector>
 
-
 using namespace std;
 
-#include <iostream>
-
-using namespace std;
-
-void hanoiMove(int n, string start, string help, string end) {
+void hanoiMove(int n, vector<int>& start, vector<int>& end, vector<int>& help) {
     if (n > 1) {
-        hanoiMove(n - 1, start, end, help);
-        cout << "move " << n <<  " from " << start << " to " << help << endl;
-        hanoiMove(n - 1, end, help, start);
+        hanoiMove(n - 1, start, help, end);
+        start.pop_back();
+        end.push_back(n);
+        hanoiMove(n - 1, help, end, start);
     }
     else {
-        cout << "move " << n << " from " << start << " to " << help << endl;
+        start.pop_back();
+        end.push_back(n);
     }
 }
 
 int main()
 {
-    int n;
-    cout << "Enter number of disks: " << endl;
-    cin >> n;
+    int n = 5; // Променете броя на дисковете според вашите изисквания
+    vector<int> start, end, help;
+    for (int i = 5; i > 0; --i) {
+        start.push_back(i);
+    }
+    cout << "Disks in start colum " << endl;
+    for (int i = start.size() - 1; i >= 0; --i) {
+        cout << start[i] << " ";
+    }
     cout << endl;
-    string A = "A", B = "B", C = "C";
+    cout << "Disks in end colum " << endl;
+    for (int i = end.size() - 1; i >= 0; --i) {
+        cout << end[i] << " ";
+    }
+    cout << endl;
 
-
-    hanoiMove(n, A, B, C);
+    hanoiMove(n, start, end, help);
+    cout << "Disks in end colum after Hanoi algorithm" << endl;
+    for (int i = end.size() - 1; i >= 0; --i) {
+        cout << end[i] << " ";
+    }
     
 
     return 0;
