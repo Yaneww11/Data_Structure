@@ -4,34 +4,32 @@
 
 using namespace std;
 
-void hanoi_tower(int n, vector<int> start, vector<int> end, vector<int> help) {
-    if (n == 0) {
-        return;
-    }
-    hanoi_tower(n - 1, start, help, end);
-    start.pop_back();
-    end.push_back(n);
-    hanoi_tower(n - 1, end, help, start);
+#include <iostream>
 
+using namespace std;
+
+void hanoiMove(int n, string start, string help, string end) {
+    if (n > 1) {
+        hanoiMove(n - 1, start, end, help);
+        cout << "move " << n <<  " from " << start << " to " << help << endl;
+        hanoiMove(n - 1, end, help, start);
+    }
+    else {
+        cout << "move " << n << " from " << start << " to " << help << endl;
+    }
 }
 
+int main()
+{
+    int n;
+    cout << "Enter number of disks: " << endl;
+    cin >> n;
+    cout << endl;
+    string A = "A", B = "B", C = "C";
 
 
-
-int main() {
-    vector<int> start;
-    for (int i = 1; i <= 5; i++)
-        start.push_back(i);
-    for (int i = 0; i < start.size(); i++)
-        cout << start[i];
-
-    vector<int> end;
-    vector<int> help;
-
-
-    hanoi_tower(5, start, end, help);
-    for (int i = 0; i < end.size(); i++)
-        cout << end[i];
+    hanoiMove(n, A, B, C);
+    
 
     return 0;
 }
