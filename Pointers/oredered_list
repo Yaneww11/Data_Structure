@@ -1,0 +1,55 @@
+#include <iostream>
+
+using namespace std;
+
+typedef struct Element* po;
+
+struct Element {
+    int data;
+    po next;
+};
+
+int main()
+{
+    po head = NULL;
+    po contr = NULL;
+    po help;
+
+    string command = "Yes";
+    cout << "Do you want to add element? ";
+    cin >> command;
+    while (command == "Yes") {
+
+        help = new Element;
+        cout << "Enter a data for element: " << endl;
+        cin >> help->data;
+        help->next = NULL;
+
+        if (head == NULL)
+            head = help;
+        else {
+            help->next = head;
+            while (help->next != NULL && help->next->data < help->data) {
+                contr = help->next;
+                help->next = help->next->next;
+            }
+            if (help->next == head) {
+                head = help;
+            }
+            else {
+                contr->next = help;
+            }
+        }
+        cout << "Do you want to add other element? ";
+        cin >> command;
+    }
+
+    po printP;
+    printP = head;
+    while (printP != NULL) {
+        cout << printP->data << " ";
+        printP = printP->next;
+    }
+
+    return 0;
+}
