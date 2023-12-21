@@ -1,0 +1,98 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+typedef struct node* po;
+
+int COUNT = 10;
+vector<int> v = { 10, 11, 14, 17, 18 , 19 };
+int INDEX = 0;
+
+struct node {
+	int data;
+	po left;
+	po right;
+};
+
+po ibd(int n) {
+	po darj;
+
+	if (n == 0) {
+		return NULL;
+	}
+	else {
+		darj = new node;
+		darj->data = v[INDEX];
+		INDEX++;
+		darj->left = ibd(n / 2);
+		darj->right = ibd((n - n / 2) - 1);
+		
+		return darj;
+	}
+}
+
+
+void print(po root, int space)
+{
+
+	if (root == NULL)
+		return;
+
+	space += COUNT;
+	print(root->right, space);
+	cout << endl;
+	for (int i = COUNT; i < space; i++)
+		cout << " ";
+	cout << root->data << "\n";
+	print(root->left, space);
+}
+
+void inf(po root) {
+	po help = root;
+	if (help != NULL) {
+		inf(help->left);
+		cout << help->data << ", ";
+		inf(help->right);
+	}
+}
+void pre(po root) {
+	po help = root;
+	if (help != NULL) {
+		cout << help->data << ", ";
+		pre(help->left);
+		pre(help->right);
+	}
+}
+void post(po root) {
+	po help = root;
+	if (help != NULL) {
+		post(help->left);
+		post(help->right);
+		cout << help->data << ", ";
+	}
+}
+
+int main()
+{
+	po root;
+	int n = v.size();
+
+	root = ibd(n);
+	print(root, 5);
+	cout << '\n' << '\n';
+
+	cout << "Infix: ";
+	inf(root);
+	cout << '\n';
+
+	cout << "Prefix: ";
+	pre(root);
+	cout << '\n';
+
+	cout << "Postfix: ";
+	post(root);
+	cout << '\n';
+
+
+	return 0;
+}
