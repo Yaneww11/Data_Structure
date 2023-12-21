@@ -1,0 +1,85 @@
+#include <iostream>
+using namespace std;
+
+typedef struct Node* pointer;
+
+struct Node {
+    int data;
+    pointer left;
+    pointer right;
+};
+
+pointer rootDdp = nullptr;
+
+void ddp(int number) {
+    if (rootDdp == nullptr) {
+        rootDdp = new Node;
+        rootDdp->data = number;
+        rootDdp->left = nullptr;
+        rootDdp->right = nullptr;
+
+        cout << rootDdp;
+    }
+    else {
+        pointer helper = rootDdp;
+        pointer inserter = helper;
+
+        while (helper != nullptr && number != helper->data) {
+            inserter = helper;
+            if (number > helper->data) {
+                helper = helper->right;
+            }
+            else {
+                helper = helper->left;
+            }
+        }
+
+
+        if (helper == nullptr) {
+            helper = new Node;
+            helper->left = nullptr;
+            helper->right = nullptr;
+            helper->data = number;
+
+            if (number > inserter->data) {
+                inserter->right = helper;
+            }
+            else {
+                inserter->left = helper;
+            }
+
+        }
+        else {
+            cout << "Ima go v darvoto" << endl;
+        }
+
+    }
+}
+
+void print(pointer root, int space) {
+    int COUNT = 13;
+    if (root == NULL)
+        return;
+
+    space += COUNT;
+    print(root->right, space);
+    cout << endl;
+    for (int i = COUNT; i < space; i++)
+        cout << " ";
+    cout << root->data << "\n";
+    print(root->left, space);
+}
+
+int main() {
+    int input;
+    cout << "Danna ?";
+    cin >> input;
+
+    while (input != 99){       
+        ddp(input);
+        cout << "Danna ?";
+        cin >> input;
+    } 
+
+    print(rootDdp, 5);
+}
