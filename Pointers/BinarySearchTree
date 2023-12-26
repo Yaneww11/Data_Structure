@@ -17,8 +17,6 @@ void ddp(int number) {
         rootDdp->data = number;
         rootDdp->left = nullptr;
         rootDdp->right = nullptr;
-
-        cout << rootDdp;
     }
     else {
         pointer helper = rootDdp;
