@@ -1,0 +1,94 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+typedef struct node* po;
+
+int COUNT = 10;
+vector<int> v = { 0, 1, 3, 4, 7, 8, 10, 47, 84};
+int INDEX = 0;
+
+struct node {
+	int data;
+	po left;
+	po right;
+};
+
+vector<int> binaryTraversal(const std::vector<int>& arr, int low, int high) {
+	vector<int> result;
+
+	if (low <= high) {
+		int mid = low + (high - low + 1) / 2;
+
+		// Добавяне на текущия елемент в резултатния вектор
+		result.push_back(arr[mid]);
+
+		// Рекурсивно обхождане вляво и вдясно от текущия елемент и добавяне на резултатите
+		auto leftResult = binaryTraversal(arr, low, mid - 1);
+		auto rightResult = binaryTraversal(arr, mid + 1, high);
+
+		result.insert(result.end(), leftResult.begin(), leftResult.end());
+		result.insert(result.end(), rightResult.begin(), rightResult.end());
+
+	}
+
+	return result;
+}
+
+po ibddp(int n) {
+	po darj;
+	vector <int> dichotimich_v = binaryTraversal(v, 0, v.size() - 1);
+
+	if (n == 0) {
+		return NULL;
+	}
+	else {
+		darj = new node;
+		darj->data = dichotimich_v[INDEX];
+		INDEX++;
+		// Първо вкарваме в ляво
+		darj->left = ibddp(n / 2);
+		//После в дясно
+		darj->right = ibddp((n - n / 2) - 1);
+
+		return darj;
+	}
+}
+
+
+void print(po root, int space)
+{
+
+	if (root == NULL)
+		return;
+
+	space += COUNT;
+	print(root->right, space);
+	cout << endl;
+	for (int i = COUNT; i < space; i++)
+		cout << " ";
+	cout << root->data << "\n";
+	print(root->left, space);
+}
+
+void printVector(const std::vector<int>& vec) {
+	cout << "The data are: ";
+	for (int i = 0; i < vec.size(); i++) {
+		cout << vec[i] << " ";
+	}
+	cout << std::endl;
+}
+
+
+int main()
+{
+	po root;
+	int n = v.size();
+	printVector(v);
+
+	root = ibddp(n);
+	print(root, 5);
+	cout << '\n' << '\n';
+
+	return 0;
+}
