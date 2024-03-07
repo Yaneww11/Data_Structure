@@ -1,0 +1,83 @@
+#include <iostream>
+
+using namespace std;
+/*
+findPaIR
+Най-голяма стойност. Даденa е редица a1, a2, …, an от целиположителни числа. Да се намери двойка цели числа (ai, aj).
+Sample input: 5  5 2 3 4 1 // Sample output: 5 4
+
+getCount
+Петър много обичал математиката и по-точно обичал да групира по
+различен начин различни числа. Веднъж Петър си намислил три цели числа X,
+Y и Z. След това създал групи от по три числа (x, y, z), където 1 < x ≤ X, 1 < y ≤ Y
+и 1 < z ≤ Z и се опитал да намери броя на тройките (x, y, z), които задоволяват
+условието x * z > y2, но не успял. Напишете програма, която да помогне на
+Петър да намери броя на тройките (x, y, z), за които x * z > y2, където 1 < x ≤ X, 1< y ≤ Y и 1 < z ≤ Z.
+
+Sample input: 3 2 2 // Sample output: 6
+Sample input: 3 3 3 // Sample output: 11
+*/
+/*void findPaIR(int arr[], int n)
+{
+	if (n < 2)
+	{
+        cout << "-1" << endl;
+        return;
+	}
+
+    int x, y;
+	for (int i = 0; i < n; ++i)
+	{
+		if (arr[i] == x)
+		{
+			continue;
+		}
+
+		if (arr[i] > x)
+		{
+			y = x;
+			x = arr[i];
+		}
+		else if(arr[i] > y)
+		{
+			y = arr[i];
+		}
+	}
+	cout << x << " " << y << endl;
+}
+*/
+
+int getCount(int X, int Y, int Z)
+{
+	int br = 0;
+	for (int x = 1; x < X; ++x)
+	{
+		int z = (Y / x) + 1;
+		if (Z >= z)
+			br = (br + (Z - z) + 1);
+
+		if (X >= z && Z >= x)
+			br = (br + (Z - x + 1) * (X - z + 1));
+
+		if (X >= z)
+			X = z - 1;
+	}
+	return br;
+}
+
+int countTRiplets(int X, int Y, int Z)
+{
+	int br = 0;
+	for (int y = 1; y < Y; ++y)
+	{
+		br = (br + getCount(X, y * y, Z));
+	}
+	return br;
+}
+
+int main()
+{
+    cout << "Hello World!\n";
+	cout << countTRiplets(3, 3, 3);
+    
+}
