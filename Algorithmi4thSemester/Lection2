@@ -1,4 +1,6 @@
 #include <iostream>
+#include <vector>
+#include <map>
 
 using namespace std;
 /*
@@ -17,15 +19,16 @@ Y и Z. След това създал групи от по три числа (x
 Sample input: 3 2 2 // Sample output: 6
 Sample input: 3 3 3 // Sample output: 11
 */
-/*void findPaIR(int arr[], int n)
+void findPaIR(int n, int arr[])
 {
 	if (n < 2)
 	{
-        cout << "-1" << endl;
-        return;
+		cout << "-1" << endl;
+		return;
 	}
 
-    int x, y;
+	int x = -9999999;
+	int y;
 	for (int i = 0; i < n; ++i)
 	{
 		if (arr[i] == x)
@@ -38,14 +41,14 @@ Sample input: 3 3 3 // Sample output: 11
 			y = x;
 			x = arr[i];
 		}
-		else if(arr[i] > y)
+		else if (arr[i] > y)
 		{
 			y = arr[i];
 		}
 	}
-	cout << x << " " << y << endl;
+	cout << "The biggest two number in array are "<<x << " " << y << endl;
 }
-*/
+
 
 int getCount(int X, int Y, int Z)
 {
@@ -75,9 +78,41 @@ int countTRiplets(int X, int Y, int Z)
 	return br;
 }
 
+bool determinantValue(int x1, int y1, int x2, int y2, int x3, int y3) {
+	return (x1 * (y2 - y3) - y1 * (x2 - x3) + 1 * (x2 * y3 - y2 * x3)) != 0;
+}
+
+int countPointsMakeTriangle(std::map<int, std::vector<int>>& point, int n) {
+	int counter = 0;
+	for (int i = 0; i < n; ++i) {
+		for (int j = i + 1; j < n; ++j) {
+			for (int k = j + 1; k < n; ++k) {
+				if (determinantValue(point[i][0], point[i][1], point[j][0], point[j][1],
+					point[k][0], point[k][1])) {
+					counter++;
+				}
+			}
+		}
+	}
+	return counter;
+}
+
 int main()
 {
-    cout << "Hello World!\n";
-	cout << countTRiplets(3, 3, 3);
-    
+	int arr_len = 5;
+	int arr[5] = { 5, 2, 3, 4, 9 };
+	findPaIR(arr_len, arr);
+	cout << "The count of triples (x, y, z), which are a solution to (x * z > y2) is - "<<countTRiplets(3, 3, 3) << endl;
+	int n;
+	cout << "Ex.3 - Enter the numbers of points \n";
+	cin >> n;
+
+	std::map<int, std::vector<int>> dict_pointers;
+	for (int i = 0; i < n; ++i) {
+		cout << "Enter x and y for Point[" << i << "] in new line\n";
+		int x, y;
+		cin >> x >> y;
+		dict_pointers[i] = { x, y };
+	}
+	cout << "You can make " << countPointsMakeTriangle(dict_pointers, n) << " triangle with that points" << endl;
 }
